@@ -1,0 +1,9 @@
+server:
+  service:
+    name: "chat"
+  http:
+    addr: ":8081"
+registry:
+  consul:
+    addrs:
+      - "127.0.0.1:8500"

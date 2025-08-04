@@ -1,0 +1,9 @@
+server:
+  service:
+    name: "gateway"
+  http:
+    addr: ":8082"
+registry:
+  consul:
+    addrs:
+      - "127.0.0.1:8500"
