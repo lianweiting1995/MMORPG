@@ -1,2 +1,5 @@
 package client;
 
+func NewChatClient() () {
+
+}
