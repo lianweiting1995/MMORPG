@@ -32,7 +32,10 @@ func wireApp(confServer *conf.Server, registry *conf.Registry, confData *conf.Da
 	greeterUsecase := biz.NewGreeterUsecase(greeterRepo, logger)
 	greeterService := service.NewGreeterService(greeterUsecase)
 	grpcServer := server.NewGRPCServer(confServer, greeterService, logger)
-	httpServer := server.NewHTTPServer(confServer, greeterService, logger)
+	loginRepo := data.NewLoginRepo(dataData, logger)
+	loginUseCase := biz.NewLoginUsecase(loginRepo, logger)
+	loginService := service.NewLoginService(loginUseCase)
+	httpServer := server.NewHTTPServer(confServer, greeterService, loginService, logger)
 	consulRegistry := server.NewConsul(registry, logger)
 	app := newApp(logger, grpcServer, httpServer, consulRegistry)
 	return app, func() {
