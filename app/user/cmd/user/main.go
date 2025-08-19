@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"os"
 
 	"MMORPG/app/user/internal/conf"
@@ -36,7 +37,7 @@ func init() {
 
 func newApp(logger log.Logger, gs *grpc.Server, hs *http.Server, cr *consul.Registry) *kratos.App {
 	return kratos.New(
-		kratos.ID(id),
+		kratos.ID(fmt.Sprintf("%s-%s", Name, id)),
 		kratos.Name(Name),
 		kratos.Version(Version),
 		kratos.Metadata(map[string]string{}),
@@ -77,7 +78,8 @@ func main() {
 	if err := c.Scan(&bc); err != nil {
 		panic(err)
 	}
-
+	Name = bc.Server.Name
+	Version = bc.Server.Version
 	app, cleanup, err := wireApp(bc.Server, bc.Data, bc.Registry, logger)
 	if err != nil {
 		panic(err)
