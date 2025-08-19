@@ -3,8 +3,35 @@
 
 openapi: 3.0.3
 info:
-    title: ""
+    title: User API
     version: 0.0.1
-paths: {}
+paths:
+    /info/{id}:
+        get:
+            tags:
+                - User
+            operationId: User_Info
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/user.v1.InfoReply'
 components:
-    schemas: {}
+    schemas:
+        user.v1.InfoReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                username:
+                    type: string
+tags:
+    - name: User

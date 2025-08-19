@@ -17,8 +17,8 @@ func NewUserService(uc *biz.UserUsecase) *UserService {
 	}
 }
 
-func (s *UserService) Info(ctx context.Context, id int) (*pb.InfoReply, error) {
-	info, err := s.uc.Info(ctx, id)
+func (s *UserService) Info(ctx context.Context, req *pb.InfoRequest) (*pb.InfoReply, error) {
+	info, err := s.uc.Info(ctx, int(req.GetId()))
 	if err != nil {
 		return nil, err
 	}

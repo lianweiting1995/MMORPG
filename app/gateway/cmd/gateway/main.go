@@ -1,12 +1,12 @@
 package main
 
 import (
+	"MMORPG/app/gateway/internal/conf"
 	"flag"
 	"fmt"
 	"os"
 
-	"MMORPG/app/gateway/internal/conf"
-
+	"github.com/go-kratos/kratos/contrib/registry/consul/v2"
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/config"
 	"github.com/go-kratos/kratos/v2/config/file"
@@ -14,8 +14,6 @@ import (
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/go-kratos/kratos/v2/transport/http"
-
-	consul "github.com/go-kratos/kratos/contrib/registry/consul/v2"
 	_ "go.uber.org/automaxprocs"
 )
 
