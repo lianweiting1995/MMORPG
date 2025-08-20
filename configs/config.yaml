@@ -17,3 +17,13 @@ register:
   consul:
     addrs:
       - "127.0.0.1:8500"
+services:
+  user:
+    name: "user"
+    version: "1.0.0"
+  gateway:
+    name: "gateway"
+    version: "1.0.0"
+  chat:
+    name: "chat"
+    version: "1.0.0"

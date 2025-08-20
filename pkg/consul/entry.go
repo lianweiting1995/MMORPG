@@ -1,9 +1,8 @@
 package consul
 
 import (
-	"MMORPG/contract"
+	"MMORPG/internal/conf"
 	"context"
-	"errors"
 	"fmt"
 	"sync"
 
@@ -25,37 +24,32 @@ var (
 	mu   sync.Mutex
 )
 
-func Client(ic any) (*g.ClientConn, error) {
-	if ic == nil {
-		return nil, errors.New("config is empty")
-	}
-	if config, ok := ic.(contract.IConfig); ok {
-		if conn == nil {
-			mu.Lock()
-			defer mu.Unlock()
+func Client(cs *conf.Consul, sr *conf.Service) (*g.ClientConn, error) {
+	if conn == nil {
+		mu.Lock()
+		defer mu.Unlock()
 
-			if conn == nil {
-				cfg := api.DefaultConfig()
-				cfg.Address = config.GetRegistry().GetConsul().GetAddrs()[0]
-				client, err := api.NewClient(cfg)
-				if err != nil {
-					return nil, err
-				}
-				consule_registry := consul.New(client)
-				filter := filter.Version(config.GetServer().GetVersion())
-				selector.SetGlobalSelector(wrr.NewBuilder())
-				endpoint := fmt.Sprintf("discovery:///%s", config.GetServer().GetName())
-				c, err := grpc.DialInsecure(
-					context.Background(),
-					grpc.WithEndpoint(endpoint),
-					grpc.WithDiscovery(consule_registry),
-					grpc.WithNodeFilter(filter),
-				)
-				if err != nil {
-					return nil, err
-				}
-				conn = c
+		if conn == nil {
+			cfg := api.DefaultConfig()
+			cfg.Address = cs.Addrs[0]
+			client, err := api.NewClient(cfg)
+			if err != nil {
+				return nil, err
 			}
+			consule_registry := consul.New(client)
+			filter := filter.Version(sr.Version)
+			selector.SetGlobalSelector(wrr.NewBuilder())
+			endpoint := fmt.Sprintf("discovery:///%s", sr.Name)
+			c, err := grpc.DialInsecure(
+				context.Background(),
+				grpc.WithEndpoint(endpoint),
+				grpc.WithDiscovery(consule_registry),
+				grpc.WithNodeFilter(filter),
+			)
+			if err != nil {
+				return nil, err
+			}
+			conn = c
 		}
 	}
 

@@ -44,8 +44,9 @@ message Data {
 }
 
 message Registry {
-  message Consul {
-    repeated string addrs = 1;
-  }
   Consul consul = 1;
+}
+
+message Consul {
+  repeated string addrs = 1;
 }

@@ -1,13 +1,15 @@
 package main
 
 import (
-	"MMORPG/app/user/helper"
+	"MMORPG/app/user/internal/conf"
 	"flag"
 	"fmt"
 	"os"
 
 	"github.com/go-kratos/kratos/contrib/registry/consul/v2"
 	"github.com/go-kratos/kratos/v2"
+	"github.com/go-kratos/kratos/v2/config"
+	"github.com/go-kratos/kratos/v2/config/file"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
@@ -60,10 +62,18 @@ func main() {
 		"span.id", tracing.SpanID(),
 	)
 
-	bc, err := helper.Config(flagconf)
-	if err != nil {
+	c := config.New(config.WithSource(file.NewSource(flagconf)))
+	defer c.Close()
+
+	if err := c.Load(); err != nil {
 		panic(err)
 	}
+	var bc conf.Bootstrap
+
+	if err := c.Scan(&bc); err != nil {
+		panic(err)
+	}
+
 	Name = bc.Server.Name
 	Version = bc.Server.Version
 	app, cleanup, err := wireApp(bc.Server, bc.Data, bc.Registry, logger)

@@ -130,8 +130,8 @@ const file_user_v1_user_proto_rawDesc = "" +
 	"\busername\x18\x02 \x01(\tR\busername2L\n" +
 	"\x04User\x12D\n" +
 	"\x04Info\x12\x14.user.v1.InfoRequest\x1a\x12.user.v1.InfoReply\"\x12\x82\xd3\xe4\x93\x02\f\x12\n" +
-	"/info/{id}BP\n" +
-	"\x1fdev.kratos.app.user.api.user.v1B\vUserProtoV1P\x01Z\x1eMMORPG/app/user/api/user/v1;v1b\x06proto3"
+	"/info/{id}B>\n" +
+	"\x16dev.kratos.api.user.v1B\vUserProtoV1P\x01Z\x15MMORPG/api/user/v1;v1b\x06proto3"
 
 var (
 	file_user_v1_user_proto_rawDescOnce sync.Once

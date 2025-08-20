@@ -9,6 +9,7 @@ message Bootstrap {
   Server server = 1;
   Data data = 2;
   Register register = 3;
+  Services services = 4;
 }
 
 message Server {
@@ -24,6 +25,7 @@ message Server {
   }
   HTTP http = 1;
   GRPC grpc = 2;
+  string path = 3;
 }
 
 message Data {
@@ -42,8 +44,20 @@ message Data {
 }
 
 message Register {
-  message Consul {
-    repeated string addrs = 1;
-  }
   Consul consul = 1;
+}
+
+message Consul {
+  repeated string addrs = 1;
+}
+
+message Services {  
+  Service user = 1;
+  Service gateway = 2;
+  Service chat = 3;
+}
+
+message Service {
+  string name = 1;
+  string version = 2;
 }
