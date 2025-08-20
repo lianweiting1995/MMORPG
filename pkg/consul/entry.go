@@ -12,6 +12,7 @@ import (
 	"github.com/go-kratos/kratos/v2/selector/wrr"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/hashicorp/consul/api"
+	"github.com/go-kratos/kratos/v2/middleware/circuitbreaker"
 	g "google.golang.org/grpc"
 )
 
@@ -45,6 +46,9 @@ func Client(cs *conf.Consul, sr *conf.Service) (*g.ClientConn, error) {
 				grpc.WithEndpoint(endpoint),
 				grpc.WithDiscovery(consule_registry),
 				grpc.WithNodeFilter(filter),
+				grpc.WithMiddleware(
+					circuitbreaker.Client(),
+				),
 			)
 			if err != nil {
 				return nil, err
