@@ -21,77 +21,77 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type MsgType int32
+type Type int32
 
 const (
-	MsgType_LOGIN    MsgType = 0
-	MsgType_CHAT     MsgType = 1
-	MsgType_POSITION MsgType = 2
+	Type_LOGIN    Type = 0
+	Type_CHAT     Type = 1
+	Type_POSITION Type = 2
 )
 
-// Enum value maps for MsgType.
+// Enum value maps for Type.
 var (
-	MsgType_name = map[int32]string{
+	Type_name = map[int32]string{
 		0: "LOGIN",
 		1: "CHAT",
 		2: "POSITION",
 	}
-	MsgType_value = map[string]int32{
+	Type_value = map[string]int32{
 		"LOGIN":    0,
 		"CHAT":     1,
 		"POSITION": 2,
 	}
 )
 
-func (x MsgType) Enum() *MsgType {
-	p := new(MsgType)
+func (x Type) Enum() *Type {
+	p := new(Type)
 	*p = x
 	return p
 }
 
-func (x MsgType) String() string {
+func (x Type) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (MsgType) Descriptor() protoreflect.EnumDescriptor {
+func (Type) Descriptor() protoreflect.EnumDescriptor {
 	return file_websocket_v1_websocket_proto_enumTypes[0].Descriptor()
 }
 
-func (MsgType) Type() protoreflect.EnumType {
+func (Type) Type() protoreflect.EnumType {
 	return &file_websocket_v1_websocket_proto_enumTypes[0]
 }
 
-func (x MsgType) Number() protoreflect.EnumNumber {
+func (x Type) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use MsgType.Descriptor instead.
-func (MsgType) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use Type.Descriptor instead.
+func (Type) EnumDescriptor() ([]byte, []int) {
 	return file_websocket_v1_websocket_proto_rawDescGZIP(), []int{0}
 }
 
-type GatewayMessage struct {
+type MsgReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Type          MsgType                `protobuf:"varint,1,opt,name=type,proto3,enum=websocket.v1.MsgType" json:"type,omitempty"`
+	Type          Type                   `protobuf:"varint,1,opt,name=type,proto3,enum=websocket.v1.Type" json:"type,omitempty"`
 	Data          string                 `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GatewayMessage) Reset() {
-	*x = GatewayMessage{}
+func (x *MsgReq) Reset() {
+	*x = MsgReq{}
 	mi := &file_websocket_v1_websocket_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GatewayMessage) String() string {
+func (x *MsgReq) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GatewayMessage) ProtoMessage() {}
+func (*MsgReq) ProtoMessage() {}
 
-func (x *GatewayMessage) ProtoReflect() protoreflect.Message {
+func (x *MsgReq) ProtoReflect() protoreflect.Message {
 	mi := &file_websocket_v1_websocket_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -103,23 +103,59 @@ func (x *GatewayMessage) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GatewayMessage.ProtoReflect.Descriptor instead.
-func (*GatewayMessage) Descriptor() ([]byte, []int) {
+// Deprecated: Use MsgReq.ProtoReflect.Descriptor instead.
+func (*MsgReq) Descriptor() ([]byte, []int) {
 	return file_websocket_v1_websocket_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *GatewayMessage) GetType() MsgType {
+func (x *MsgReq) GetType() Type {
 	if x != nil {
 		return x.Type
 	}
-	return MsgType_LOGIN
+	return Type_LOGIN
 }
 
-func (x *GatewayMessage) GetData() string {
+func (x *MsgReq) GetData() string {
 	if x != nil {
 		return x.Data
 	}
 	return ""
+}
+
+type MsgReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MsgReply) Reset() {
+	*x = MsgReply{}
+	mi := &file_websocket_v1_websocket_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MsgReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgReply) ProtoMessage() {}
+
+func (x *MsgReply) ProtoReflect() protoreflect.Message {
+	mi := &file_websocket_v1_websocket_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MsgReply.ProtoReflect.Descriptor instead.
+func (*MsgReply) Descriptor() ([]byte, []int) {
+	return file_websocket_v1_websocket_proto_rawDescGZIP(), []int{1}
 }
 
 type LoginInput struct {
@@ -131,7 +167,7 @@ type LoginInput struct {
 
 func (x *LoginInput) Reset() {
 	*x = LoginInput{}
-	mi := &file_websocket_v1_websocket_proto_msgTypes[1]
+	mi := &file_websocket_v1_websocket_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -143,7 +179,7 @@ func (x *LoginInput) String() string {
 func (*LoginInput) ProtoMessage() {}
 
 func (x *LoginInput) ProtoReflect() protoreflect.Message {
-	mi := &file_websocket_v1_websocket_proto_msgTypes[1]
+	mi := &file_websocket_v1_websocket_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -156,7 +192,7 @@ func (x *LoginInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoginInput.ProtoReflect.Descriptor instead.
 func (*LoginInput) Descriptor() ([]byte, []int) {
-	return file_websocket_v1_websocket_proto_rawDescGZIP(), []int{1}
+	return file_websocket_v1_websocket_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *LoginInput) GetPhone() string {
@@ -175,7 +211,7 @@ type LoginOutput struct {
 
 func (x *LoginOutput) Reset() {
 	*x = LoginOutput{}
-	mi := &file_websocket_v1_websocket_proto_msgTypes[2]
+	mi := &file_websocket_v1_websocket_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -187,7 +223,7 @@ func (x *LoginOutput) String() string {
 func (*LoginOutput) ProtoMessage() {}
 
 func (x *LoginOutput) ProtoReflect() protoreflect.Message {
-	mi := &file_websocket_v1_websocket_proto_msgTypes[2]
+	mi := &file_websocket_v1_websocket_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -200,7 +236,7 @@ func (x *LoginOutput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoginOutput.ProtoReflect.Descriptor instead.
 func (*LoginOutput) Descriptor() ([]byte, []int) {
-	return file_websocket_v1_websocket_proto_rawDescGZIP(), []int{2}
+	return file_websocket_v1_websocket_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *LoginOutput) GetToken() string {
@@ -218,7 +254,7 @@ type ChatInput struct {
 
 func (x *ChatInput) Reset() {
 	*x = ChatInput{}
-	mi := &file_websocket_v1_websocket_proto_msgTypes[3]
+	mi := &file_websocket_v1_websocket_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -230,7 +266,7 @@ func (x *ChatInput) String() string {
 func (*ChatInput) ProtoMessage() {}
 
 func (x *ChatInput) ProtoReflect() protoreflect.Message {
-	mi := &file_websocket_v1_websocket_proto_msgTypes[3]
+	mi := &file_websocket_v1_websocket_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -243,7 +279,7 @@ func (x *ChatInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChatInput.ProtoReflect.Descriptor instead.
 func (*ChatInput) Descriptor() ([]byte, []int) {
-	return file_websocket_v1_websocket_proto_rawDescGZIP(), []int{3}
+	return file_websocket_v1_websocket_proto_rawDescGZIP(), []int{4}
 }
 
 type ChatOutput struct {
@@ -254,7 +290,7 @@ type ChatOutput struct {
 
 func (x *ChatOutput) Reset() {
 	*x = ChatOutput{}
-	mi := &file_websocket_v1_websocket_proto_msgTypes[4]
+	mi := &file_websocket_v1_websocket_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -266,7 +302,7 @@ func (x *ChatOutput) String() string {
 func (*ChatOutput) ProtoMessage() {}
 
 func (x *ChatOutput) ProtoReflect() protoreflect.Message {
-	mi := &file_websocket_v1_websocket_proto_msgTypes[4]
+	mi := &file_websocket_v1_websocket_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -279,7 +315,7 @@ func (x *ChatOutput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChatOutput.ProtoReflect.Descriptor instead.
 func (*ChatOutput) Descriptor() ([]byte, []int) {
-	return file_websocket_v1_websocket_proto_rawDescGZIP(), []int{4}
+	return file_websocket_v1_websocket_proto_rawDescGZIP(), []int{5}
 }
 
 type PostiionInput struct {
@@ -290,7 +326,7 @@ type PostiionInput struct {
 
 func (x *PostiionInput) Reset() {
 	*x = PostiionInput{}
-	mi := &file_websocket_v1_websocket_proto_msgTypes[5]
+	mi := &file_websocket_v1_websocket_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -302,7 +338,7 @@ func (x *PostiionInput) String() string {
 func (*PostiionInput) ProtoMessage() {}
 
 func (x *PostiionInput) ProtoReflect() protoreflect.Message {
-	mi := &file_websocket_v1_websocket_proto_msgTypes[5]
+	mi := &file_websocket_v1_websocket_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -315,7 +351,7 @@ func (x *PostiionInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PostiionInput.ProtoReflect.Descriptor instead.
 func (*PostiionInput) Descriptor() ([]byte, []int) {
-	return file_websocket_v1_websocket_proto_rawDescGZIP(), []int{5}
+	return file_websocket_v1_websocket_proto_rawDescGZIP(), []int{6}
 }
 
 type PostiionOutput struct {
@@ -326,7 +362,7 @@ type PostiionOutput struct {
 
 func (x *PostiionOutput) Reset() {
 	*x = PostiionOutput{}
-	mi := &file_websocket_v1_websocket_proto_msgTypes[6]
+	mi := &file_websocket_v1_websocket_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -338,7 +374,7 @@ func (x *PostiionOutput) String() string {
 func (*PostiionOutput) ProtoMessage() {}
 
 func (x *PostiionOutput) ProtoReflect() protoreflect.Message {
-	mi := &file_websocket_v1_websocket_proto_msgTypes[6]
+	mi := &file_websocket_v1_websocket_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -351,17 +387,19 @@ func (x *PostiionOutput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PostiionOutput.ProtoReflect.Descriptor instead.
 func (*PostiionOutput) Descriptor() ([]byte, []int) {
-	return file_websocket_v1_websocket_proto_rawDescGZIP(), []int{6}
+	return file_websocket_v1_websocket_proto_rawDescGZIP(), []int{7}
 }
 
 var File_websocket_v1_websocket_proto protoreflect.FileDescriptor
 
 const file_websocket_v1_websocket_proto_rawDesc = "" +
 	"\n" +
-	"\x1cwebsocket/v1/websocket.proto\x12\fwebsocket.v1\"O\n" +
-	"\x0eGatewayMessage\x12)\n" +
-	"\x04type\x18\x01 \x01(\x0e2\x15.websocket.v1.MsgTypeR\x04type\x12\x12\n" +
-	"\x04data\x18\x02 \x01(\tR\x04data\"\"\n" +
+	"\x1cwebsocket/v1/websocket.proto\x12\fwebsocket.v1\"D\n" +
+	"\x06MsgReq\x12&\n" +
+	"\x04type\x18\x01 \x01(\x0e2\x12.websocket.v1.TypeR\x04type\x12\x12\n" +
+	"\x04data\x18\x02 \x01(\tR\x04data\"\n" +
+	"\n" +
+	"\bMsgReply\"\"\n" +
 	"\n" +
 	"LoginInput\x12\x14\n" +
 	"\x05phone\x18\x01 \x01(\tR\x05phone\"#\n" +
@@ -371,11 +409,13 @@ const file_websocket_v1_websocket_proto_rawDesc = "" +
 	"\n" +
 	"ChatOutput\"\x0f\n" +
 	"\rPostiionInput\"\x10\n" +
-	"\x0ePostiionOutput*,\n" +
-	"\aMsgType\x12\t\n" +
+	"\x0ePostiionOutput*)\n" +
+	"\x04Type\x12\t\n" +
 	"\x05LOGIN\x10\x00\x12\b\n" +
 	"\x04CHAT\x10\x01\x12\f\n" +
-	"\bPOSITION\x10\x02BI\n" +
+	"\bPOSITION\x10\x022A\n" +
+	"\tWebsocket\x124\n" +
+	"\x04Push\x12\x14.websocket.v1.MsgReq\x1a\x16.websocket.v1.MsgReplyBI\n" +
 	"\x17dev.kratos.websocket.v1B\x10WebsocketProtoV1P\x01Z\x1aMMORPG/api/websocket/v1;v1b\x06proto3"
 
 var (
@@ -391,21 +431,24 @@ func file_websocket_v1_websocket_proto_rawDescGZIP() []byte {
 }
 
 var file_websocket_v1_websocket_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_websocket_v1_websocket_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_websocket_v1_websocket_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_websocket_v1_websocket_proto_goTypes = []any{
-	(MsgType)(0),           // 0: websocket.v1.MsgType
-	(*GatewayMessage)(nil), // 1: websocket.v1.GatewayMessage
-	(*LoginInput)(nil),     // 2: websocket.v1.LoginInput
-	(*LoginOutput)(nil),    // 3: websocket.v1.LoginOutput
-	(*ChatInput)(nil),      // 4: websocket.v1.ChatInput
-	(*ChatOutput)(nil),     // 5: websocket.v1.ChatOutput
-	(*PostiionInput)(nil),  // 6: websocket.v1.PostiionInput
-	(*PostiionOutput)(nil), // 7: websocket.v1.PostiionOutput
+	(Type)(0),              // 0: websocket.v1.Type
+	(*MsgReq)(nil),         // 1: websocket.v1.MsgReq
+	(*MsgReply)(nil),       // 2: websocket.v1.MsgReply
+	(*LoginInput)(nil),     // 3: websocket.v1.LoginInput
+	(*LoginOutput)(nil),    // 4: websocket.v1.LoginOutput
+	(*ChatInput)(nil),      // 5: websocket.v1.ChatInput
+	(*ChatOutput)(nil),     // 6: websocket.v1.ChatOutput
+	(*PostiionInput)(nil),  // 7: websocket.v1.PostiionInput
+	(*PostiionOutput)(nil), // 8: websocket.v1.PostiionOutput
 }
 var file_websocket_v1_websocket_proto_depIdxs = []int32{
-	0, // 0: websocket.v1.GatewayMessage.type:type_name -> websocket.v1.MsgType
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
+	0, // 0: websocket.v1.MsgReq.type:type_name -> websocket.v1.Type
+	1, // 1: websocket.v1.Websocket.Push:input_type -> websocket.v1.MsgReq
+	2, // 2: websocket.v1.Websocket.Push:output_type -> websocket.v1.MsgReply
+	2, // [2:3] is the sub-list for method output_type
+	1, // [1:2] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
@@ -422,9 +465,9 @@ func file_websocket_v1_websocket_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_websocket_v1_websocket_proto_rawDesc), len(file_websocket_v1_websocket_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   7,
+			NumMessages:   8,
 			NumExtensions: 0,
-			NumServices:   0,
+			NumServices:   1,
 		},
 		GoTypes:           file_websocket_v1_websocket_proto_goTypes,
 		DependencyIndexes: file_websocket_v1_websocket_proto_depIdxs,

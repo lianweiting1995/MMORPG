@@ -19,6 +19,7 @@ func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, login *servi
 	gateway = InitGateway(logger, login)
 	// 定期检测链接,处理异常连接
 	go gateway.checkInactiveConnections()
+
 	var opts = []http.ServerOption{
 		http.Middleware(
 			recovery.Recovery(),

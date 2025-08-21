@@ -2,6 +2,7 @@ package server
 
 import (
 	v1 "MMORPG/api/helloworld/v1"
+	websocket_v1 "MMORPG/api/websocket/v1"
 	"MMORPG/app/gateway/internal/conf"
 	"MMORPG/app/gateway/internal/service"
 
@@ -13,7 +14,7 @@ import (
 )
 
 // NewGRPCServer new a gRPC server.
-func NewGRPCServer(c *conf.Server, greeter *service.GreeterService, logger log.Logger) *grpc.Server {
+func NewGRPCServer(c *conf.Server, greeter *service.GreeterService, ws *service.WebsocketService, logger log.Logger) *grpc.Server {
 	var opts = []grpc.ServerOption{
 		grpc.Middleware(
 			recovery.Recovery(),
@@ -32,5 +33,7 @@ func NewGRPCServer(c *conf.Server, greeter *service.GreeterService, logger log.L
 	}
 	srv := grpc.NewServer(opts...)
 	v1.RegisterGreeterServer(srv, greeter)
+	websocket_v1.RegisterWebsocketServer(srv, ws)
+	
 	return srv
 }

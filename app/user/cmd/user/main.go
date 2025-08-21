@@ -73,7 +73,9 @@ func main() {
 	if err := c.Scan(&bc); err != nil {
 		panic(err)
 	}
-
+	if bc.Server.Id != "" {
+		id = bc.Server.Id
+	}
 	Name = bc.Server.Name
 	Version = bc.Server.Version
 	// 添加链路追踪

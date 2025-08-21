@@ -104,14 +104,14 @@ func (g *Gateway) writePump(ctx context.Context, c *Connection) {
 				return
 			}
 			// 解析提交的数据
-			var msg pb.GatewayMessage
+			var msg pb.MsgReq
 			if err := proto.Unmarshal(message, &msg); err != nil {
 				g.log.Log(log.LevelError, "%s", err)
 				return
 			}
 			var re string
 			switch msg.Type {
-			case pb.MsgType_LOGIN:
+			case pb.Type_LOGIN:
 				var input pb.LoginInput
 				err := json.Unmarshal([]byte(msg.Data), &input)
 				if err != nil {

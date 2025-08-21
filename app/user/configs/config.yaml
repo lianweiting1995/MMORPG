@@ -1,6 +1,7 @@
 server:
-  name: "user"
-  version: "1.0.0"
+  id: kD3nC7tU6hV0gX3
+  name: user
+  version: 1.0.0
   http:
     addr: 0.0.0.0:8002
     timeout: 1s

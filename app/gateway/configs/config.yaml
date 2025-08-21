@@ -1,6 +1,7 @@
 server:
-  name: "gateway"
-  version: "1.0.0"
+  id: fA4fO2uE3tV5zL4
+  name: gateway
+  version: 1.0.0
   http:
     addr: 0.0.0.0:8001
     timeout: 1s

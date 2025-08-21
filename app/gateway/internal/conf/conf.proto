@@ -27,6 +27,7 @@ message Server {
   GRPC grpc = 2;
   string name = 3;
   string version = 4;
+  string id = 5;
 }
 
 message Data {

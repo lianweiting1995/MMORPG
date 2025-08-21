@@ -64,6 +64,9 @@ func main() {
 	if err := c.Scan(&bc); err != nil {
 		panic(err)
 	}
+	if bc.Server.Id != "" {
+		id = bc.Server.Id
+	}
 	Name = bc.Server.Name
 	Version = bc.Server.Version
 	logger := log.With(log.NewStdLogger(os.Stdout),

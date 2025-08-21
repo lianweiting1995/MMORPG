@@ -7,15 +7,23 @@ option java_multiple_files = true;
 option java_package = "dev.kratos.websocket.v1";
 option java_outer_classname = "WebsocketProtoV1";
 
-enum MsgType {
+service Websocket {
+    rpc Push(MsgReq) returns (MsgReply);
+}
+
+enum Type {
     LOGIN = 0;
     CHAT = 1;
     POSITION = 2;
 };
 
-message GatewayMessage {
-    MsgType type = 1;
+message MsgReq {
+    Type type = 1;
     string data = 2;
+}
+
+message MsgReply {
+
 }
 
 message LoginInput {
