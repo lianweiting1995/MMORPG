@@ -2,8 +2,8 @@ package main
 
 import (
 	"MMORPG/app/user/internal/conf"
+	"MMORPG/pkg/trace"
 	"flag"
-	"fmt"
 	"os"
 
 	"github.com/go-kratos/kratos/contrib/registry/consul/v2"
@@ -35,7 +35,7 @@ func init() {
 
 func newApp(logger log.Logger, gs *grpc.Server, hs *http.Server, cr *consul.Registry) *kratos.App {
 	return kratos.New(
-		kratos.ID(fmt.Sprintf("%s-%s", Name, id)),
+		kratos.ID(id),
 		kratos.Name(Name),
 		kratos.Version(Version),
 		kratos.Metadata(map[string]string{}),
@@ -76,6 +76,11 @@ func main() {
 
 	Name = bc.Server.Name
 	Version = bc.Server.Version
+	// 添加链路追踪
+	err := trace.InitTracer(bc.Tracer.Addr, bc.Server.Name)
+	if err != nil {
+		panic(err)
+	}
 	app, cleanup, err := wireApp(bc.Server, bc.Data, bc.Registry, logger)
 	if err != nil {
 		panic(err)

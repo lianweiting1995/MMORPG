@@ -2,18 +2,18 @@ syntax = "proto3";
 
 package websocket.v1;
 
-option go_package = "MMORPG/app/gateway/api/websocket/v1;v1";
+option go_package = "MMORPG/api/websocket/v1;v1";
 option java_multiple_files = true;
-option java_package = "dev.kratos.gateway.api.websocket.v1";
+option java_package = "dev.kratos.websocket.v1";
 option java_outer_classname = "WebsocketProtoV1";
 
-message GatewayMessage {
-    enum MsgType {
-        LOGIN = 0;
-        CHAT = 1;
-        POSITION = 2;
-    };
+enum MsgType {
+    LOGIN = 0;
+    CHAT = 1;
+    POSITION = 2;
+};
 
+message GatewayMessage {
     MsgType type = 1;
     string data = 2;
 }

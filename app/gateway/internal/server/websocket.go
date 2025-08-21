@@ -1,7 +1,7 @@
 package server
 
 import (
-	pb "MMORPG/app/gateway/api/websocket/v1"
+	pb "MMORPG/api/websocket/v1"
 	"MMORPG/app/gateway/internal/service"
 	"context"
 	"encoding/json"
@@ -111,7 +111,7 @@ func (g *Gateway) writePump(ctx context.Context, c *Connection) {
 			}
 			var re string
 			switch msg.Type {
-			case pb.GatewayMessage_LOGIN:
+			case pb.MsgType_LOGIN:
 				var input pb.LoginInput
 				err := json.Unmarshal([]byte(msg.Data), &input)
 				if err != nil {
@@ -142,7 +142,7 @@ func (g *Gateway) writePump(ctx context.Context, c *Connection) {
 	}
 }
 
-func (g *Gateway) readPump(ctx context.Context, c *Connection) {
+func (g *Gateway) readPump(_ context.Context, c *Connection) {
 	defer func() {
 		g.connections.Delete(c.playerId)
 		zone := calculateZone(c.playerId)

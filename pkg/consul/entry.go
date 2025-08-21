@@ -14,6 +14,7 @@ import (
 	"github.com/hashicorp/consul/api"
 	"github.com/go-kratos/kratos/v2/middleware/circuitbreaker"
 	g "google.golang.org/grpc"
+	"github.com/go-kratos/kratos/v2/middleware/tracing"
 )
 
 type ConsulInterface interface {
@@ -47,7 +48,8 @@ func Client(cs *conf.Consul, sr *conf.Service) (*g.ClientConn, error) {
 				grpc.WithDiscovery(consule_registry),
 				grpc.WithNodeFilter(filter),
 				grpc.WithMiddleware(
-					circuitbreaker.Client(),
+					circuitbreaker.Client(), // 熔断器
+					tracing.Client(), // 链路追踪器
 				),
 			)
 			if err != nil {

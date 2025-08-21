@@ -1,7 +1,7 @@
 package service
 
 import (
-	pb "MMORPG/app/gateway/api/websocket/v1"
+	pb "MMORPG/api/websocket/v1"
 	"MMORPG/app/gateway/internal/biz"
 	"context"
 )

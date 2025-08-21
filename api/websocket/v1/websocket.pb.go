@@ -7,7 +7,6 @@
 package v1
 
 import (
-	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -22,58 +21,58 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type GatewayMessage_MsgType int32
+type MsgType int32
 
 const (
-	GatewayMessage_LOGIN    GatewayMessage_MsgType = 0
-	GatewayMessage_CHAT     GatewayMessage_MsgType = 1
-	GatewayMessage_POSITION GatewayMessage_MsgType = 2
+	MsgType_LOGIN    MsgType = 0
+	MsgType_CHAT     MsgType = 1
+	MsgType_POSITION MsgType = 2
 )
 
-// Enum value maps for GatewayMessage_MsgType.
+// Enum value maps for MsgType.
 var (
-	GatewayMessage_MsgType_name = map[int32]string{
+	MsgType_name = map[int32]string{
 		0: "LOGIN",
 		1: "CHAT",
 		2: "POSITION",
 	}
-	GatewayMessage_MsgType_value = map[string]int32{
+	MsgType_value = map[string]int32{
 		"LOGIN":    0,
 		"CHAT":     1,
 		"POSITION": 2,
 	}
 )
 
-func (x GatewayMessage_MsgType) Enum() *GatewayMessage_MsgType {
-	p := new(GatewayMessage_MsgType)
+func (x MsgType) Enum() *MsgType {
+	p := new(MsgType)
 	*p = x
 	return p
 }
 
-func (x GatewayMessage_MsgType) String() string {
+func (x MsgType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (GatewayMessage_MsgType) Descriptor() protoreflect.EnumDescriptor {
+func (MsgType) Descriptor() protoreflect.EnumDescriptor {
 	return file_websocket_v1_websocket_proto_enumTypes[0].Descriptor()
 }
 
-func (GatewayMessage_MsgType) Type() protoreflect.EnumType {
+func (MsgType) Type() protoreflect.EnumType {
 	return &file_websocket_v1_websocket_proto_enumTypes[0]
 }
 
-func (x GatewayMessage_MsgType) Number() protoreflect.EnumNumber {
+func (x MsgType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use GatewayMessage_MsgType.Descriptor instead.
-func (GatewayMessage_MsgType) EnumDescriptor() ([]byte, []int) {
-	return file_websocket_v1_websocket_proto_rawDescGZIP(), []int{0, 0}
+// Deprecated: Use MsgType.Descriptor instead.
+func (MsgType) EnumDescriptor() ([]byte, []int) {
+	return file_websocket_v1_websocket_proto_rawDescGZIP(), []int{0}
 }
 
 type GatewayMessage struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Type          GatewayMessage_MsgType `protobuf:"varint,1,opt,name=type,proto3,enum=websocket.v1.GatewayMessage_MsgType" json:"type,omitempty"`
+	Type          MsgType                `protobuf:"varint,1,opt,name=type,proto3,enum=websocket.v1.MsgType" json:"type,omitempty"`
 	Data          string                 `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -109,11 +108,11 @@ func (*GatewayMessage) Descriptor() ([]byte, []int) {
 	return file_websocket_v1_websocket_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *GatewayMessage) GetType() GatewayMessage_MsgType {
+func (x *GatewayMessage) GetType() MsgType {
 	if x != nil {
 		return x.Type
 	}
-	return GatewayMessage_LOGIN
+	return MsgType_LOGIN
 }
 
 func (x *GatewayMessage) GetData() string {
@@ -359,14 +358,10 @@ var File_websocket_v1_websocket_proto protoreflect.FileDescriptor
 
 const file_websocket_v1_websocket_proto_rawDesc = "" +
 	"\n" +
-	"\x1cwebsocket/v1/websocket.proto\x12\fwebsocket.v1\x1a\x1cgoogle/api/annotations.proto\"\x8c\x01\n" +
-	"\x0eGatewayMessage\x128\n" +
-	"\x04type\x18\x01 \x01(\x0e2$.websocket.v1.GatewayMessage.MsgTypeR\x04type\x12\x12\n" +
-	"\x04data\x18\x02 \x01(\tR\x04data\",\n" +
-	"\aMsgType\x12\t\n" +
-	"\x05LOGIN\x10\x00\x12\b\n" +
-	"\x04CHAT\x10\x01\x12\f\n" +
-	"\bPOSITION\x10\x02\"\"\n" +
+	"\x1cwebsocket/v1/websocket.proto\x12\fwebsocket.v1\"O\n" +
+	"\x0eGatewayMessage\x12)\n" +
+	"\x04type\x18\x01 \x01(\x0e2\x15.websocket.v1.MsgTypeR\x04type\x12\x12\n" +
+	"\x04data\x18\x02 \x01(\tR\x04data\"\"\n" +
 	"\n" +
 	"LoginInput\x12\x14\n" +
 	"\x05phone\x18\x01 \x01(\tR\x05phone\"#\n" +
@@ -376,8 +371,12 @@ const file_websocket_v1_websocket_proto_rawDesc = "" +
 	"\n" +
 	"ChatOutput\"\x0f\n" +
 	"\rPostiionInput\"\x10\n" +
-	"\x0ePostiionOutputBa\n" +
-	"#dev.kratos.gateway.api.websocket.v1B\x10WebsocketProtoV1P\x01Z&MMORPG/app/gateway/api/websocket/v1;v1b\x06proto3"
+	"\x0ePostiionOutput*,\n" +
+	"\aMsgType\x12\t\n" +
+	"\x05LOGIN\x10\x00\x12\b\n" +
+	"\x04CHAT\x10\x01\x12\f\n" +
+	"\bPOSITION\x10\x02BI\n" +
+	"\x17dev.kratos.websocket.v1B\x10WebsocketProtoV1P\x01Z\x1aMMORPG/api/websocket/v1;v1b\x06proto3"
 
 var (
 	file_websocket_v1_websocket_proto_rawDescOnce sync.Once
@@ -394,17 +393,17 @@ func file_websocket_v1_websocket_proto_rawDescGZIP() []byte {
 var file_websocket_v1_websocket_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_websocket_v1_websocket_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_websocket_v1_websocket_proto_goTypes = []any{
-	(GatewayMessage_MsgType)(0), // 0: websocket.v1.GatewayMessage.MsgType
-	(*GatewayMessage)(nil),      // 1: websocket.v1.GatewayMessage
-	(*LoginInput)(nil),          // 2: websocket.v1.LoginInput
-	(*LoginOutput)(nil),         // 3: websocket.v1.LoginOutput
-	(*ChatInput)(nil),           // 4: websocket.v1.ChatInput
-	(*ChatOutput)(nil),          // 5: websocket.v1.ChatOutput
-	(*PostiionInput)(nil),       // 6: websocket.v1.PostiionInput
-	(*PostiionOutput)(nil),      // 7: websocket.v1.PostiionOutput
+	(MsgType)(0),           // 0: websocket.v1.MsgType
+	(*GatewayMessage)(nil), // 1: websocket.v1.GatewayMessage
+	(*LoginInput)(nil),     // 2: websocket.v1.LoginInput
+	(*LoginOutput)(nil),    // 3: websocket.v1.LoginOutput
+	(*ChatInput)(nil),      // 4: websocket.v1.ChatInput
+	(*ChatOutput)(nil),     // 5: websocket.v1.ChatOutput
+	(*PostiionInput)(nil),  // 6: websocket.v1.PostiionInput
+	(*PostiionOutput)(nil), // 7: websocket.v1.PostiionOutput
 }
 var file_websocket_v1_websocket_proto_depIdxs = []int32{
-	0, // 0: websocket.v1.GatewayMessage.type:type_name -> websocket.v1.GatewayMessage.MsgType
+	0, // 0: websocket.v1.GatewayMessage.type:type_name -> websocket.v1.MsgType
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
