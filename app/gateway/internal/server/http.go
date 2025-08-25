@@ -12,13 +12,9 @@ import (
 	"github.com/gorilla/mux"
 )
 
-var gateway *Gateway
-
 // NewHTTPServer new an HTTP server.
-func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, login *service.LoginService, logger log.Logger) *http.Server {
-	gateway = InitGateway(logger, login)
-	// 定期检测链接,处理异常连接
-	go gateway.checkInactiveConnections()
+func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, login *service.LoginService, ws *service.WebsocketService, logger log.Logger) *http.Server {
+	ws.InitGateway(context.Background())
 
 	var opts = []http.ServerOption{
 		http.Middleware(
@@ -38,7 +34,7 @@ func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, login *servi
 	router := mux.NewRouter()
 	router.HandleFunc("/v1/ws", func(w http.ResponseWriter, r *http.Request) {
 		ctx := context.Background()
-		gateway.HandleConnection(ctx, w, r)
+		ws.Handle(ctx, w, r)
 	})
 
 	srv := http.NewServer(opts...)

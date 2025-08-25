@@ -1,11 +1,8 @@
-package server
+package biz
 
 import (
 	pb "MMORPG/api/websocket/v1"
-	"MMORPG/app/gateway/internal/service"
 	"context"
-	"encoding/json"
-	"fmt"
 	"net/http"
 	"sync"
 	"sync/atomic"
@@ -18,22 +15,21 @@ import (
 )
 
 type Connection struct {
-	ws         *websocket.Conn
-	sendChan   chan []byte
-	playerId   string // 用户ID
-	zoneID     int
-	lastActive int64 // 记录最后的活跃时间
+	ws         *websocket.Conn // 当前的连接
+	sendChan   chan []byte     // 发送管道
+	playerId   string          // 用户ID
+	zoneID     int             // 所在的地区ID
+	lastActive int64           // 记录最后的活跃时间
 }
 
 type Gateway struct {
-	connections *sync.Map             // playerID -> *Connection
-	zoneBuckets [256]*sync.Map        // 按区域分桶
-	upgrader    websocket.Upgrader    // 连接标记
-	log         log.Logger            // 日志记录
-	loginSrv    *service.LoginService // 登录服务
+	connections *sync.Map          // playerID -> *Connection
+	zoneBuckets [256]*sync.Map     // 按区域分桶
+	upgrader    websocket.Upgrader // 连接标记
+	log         log.Logger         // 日志记录
 }
 
-func InitGateway(log log.Logger, loginSrv *service.LoginService) *Gateway {
+func InitGateway(log log.Logger) *Gateway {
 	g := &Gateway{
 		upgrader: websocket.Upgrader{
 			ReadBufferSize:    1024,
@@ -42,7 +38,6 @@ func InitGateway(log log.Logger, loginSrv *service.LoginService) *Gateway {
 		},
 		log:         log,
 		connections: &sync.Map{},
-		loginSrv:    loginSrv,
 	}
 	// 初始化所有的桶
 	for i := range g.zoneBuckets {
@@ -112,18 +107,7 @@ func (g *Gateway) writePump(ctx context.Context, c *Connection) {
 			var re string
 			switch msg.Type {
 			case pb.Type_LOGIN:
-				var input pb.LoginInput
-				err := json.Unmarshal([]byte(msg.Data), &input)
-				if err != nil {
-					re = fmt.Sprintf("%v", err)
-				} else {
-					output, err := g.loginSrv.LoginWithPhone(ctx, &input)
-					if err != nil {
-						re = fmt.Sprintf("%v", err)
-					} else {
-						re = fmt.Sprintf("%+v", output)
-					}
-				}
+				re = "login"
 			default:
 				re = "invalid data"
 			}
@@ -164,7 +148,7 @@ func (g *Gateway) readPump(_ context.Context, c *Connection) {
 }
 
 // checkInactiveConnections 定期检查连接
-func (g *Gateway) checkInactiveConnections() {
+func (g *Gateway) CheckInactiveConnections() {
 	ticker := time.NewTicker(time.Minute)
 	defer ticker.Stop()
 
