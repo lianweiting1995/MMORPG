@@ -1,7 +1,6 @@
 package helper
 
 import (
-	"fmt"
 	"sync"
 )
 
@@ -27,10 +26,10 @@ func Push(name string, task func()) {
 
 func (s *Supervisor) Push(name string, task func()) {
 	t := Task{
-		handle: task,
-		retry: 0,
+		handle:    task,
+		retry:     0,
 		max_retry: 3,
-		running: false,
+		running:   false,
 	}
 
 	s.tasks[name] = &t
@@ -69,7 +68,6 @@ func (t *Task) Run() {
 }
 
 func (t *Task) restart() {
-	fmt.Println("retry restart")
 	// 停止重试
 	if t.retry > t.max_retry {
 		return
