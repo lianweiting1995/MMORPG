@@ -3,10 +3,10 @@ server:
   name: user
   version: 1.0.0
   http:
-    addr: 0.0.0.0:8002
+    addr: 0.0.0.0:8000
     timeout: 1s
   grpc:
-    addr: 0.0.0.0:9002
+    addr: 0.0.0.0:9000
     timeout: 1s
 data:
   database:
