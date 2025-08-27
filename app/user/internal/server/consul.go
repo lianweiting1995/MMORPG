@@ -2,6 +2,7 @@ package server
 
 import (
 	"MMORPG/app/user/internal/conf"
+	"os"
 
 	consul "github.com/go-kratos/kratos/contrib/registry/consul/v2"
 
@@ -11,7 +12,12 @@ import (
 
 func NewConsul(c *conf.Registry, logger log.Logger) *consul.Registry {
 	config := api.DefaultConfig()
-	config.Address = c.Consul.Addrs[0]
+	addr := os.Getenv("CONSUL_HTTP_ADDR")
+	if addr != "" {
+		config.Address = addr
+	} else {
+		config.Address = c.Consul.Addrs[0]
+	}
 	client, err := api.NewClient(config)
 	if err != nil {
 		panic(err)
