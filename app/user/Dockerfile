@@ -1,6 +1,8 @@
 FROM golang:1.23 AS builder
 
 COPY . /src
+COPY ../../go.mod /src
+COPY ../../go.sum /src
 WORKDIR /src
 
 RUN GOPROXY=https://goproxy.cn make build
