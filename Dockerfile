@@ -3,7 +3,7 @@ FROM golang:1.19 AS builder
 COPY . /src
 WORKDIR /src
 
-RUN GOPROXY=https://goproxy.cn make build
+RUN cd app/gateway && GOPROXY=https://goproxy.cn make build && mv ./bin /src
 
 FROM debian:stable-slim
 
