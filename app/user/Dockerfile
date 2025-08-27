@@ -1,11 +1,9 @@
 FROM golang:1.23 AS builder
 
 COPY . /src
-COPY ../../go.mod /src
-COPY ../../go.sum /src
 WORKDIR /src
 
-RUN GOPROXY=https://goproxy.cn make build
+RUN cd app/user && GOPROXY=https://goproxy.cn make build && mv ./bin /src
 
 FROM debian:stable-slim
 
